@@ -211,7 +211,7 @@ export function Navbar() {
         </Container>
       </AppBar>
 
-      <Drawer anchor={lang === 'ar' ? 'right' : 'left'} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+      <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <Box sx={{ width: 280 }} role="presentation">
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 2 }}>
             <Typography variant="h6" fontWeight={800}>

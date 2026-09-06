@@ -33,40 +33,48 @@ export function HomePage() {
     <Box>
       <Box
         sx={{
-          background: (theme) =>
-            theme.palette.mode === 'light'
-              ? 'linear-gradient(135deg, #EEF2FF 0%, #FFF7ED 100%)'
-              : 'linear-gradient(135deg, #1E1B3A 0%, #2A1B12 100%)',
+          position: 'relative',
+          backgroundImage:
+            'url(https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&h=1200&q=80)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 20%',
+          color: '#fff',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(180deg, rgba(15,15,25,0.75) 0%, rgba(15,15,25,0.55) 55%, rgba(15,15,25,0.8) 100%)',
+          },
         }}
       >
-        <Container maxWidth="lg">
-          <Grid container spacing={4} alignItems="center" sx={{ py: { xs: 6, md: 10 } }}>
-            <Grid item xs={12} md={6}>
-              <Chip label={t('home.newSeason')} color="secondary" size="small" sx={{ mb: 2 }} />
-              <Typography variant="h1" sx={{ fontSize: { xs: '2.25rem', sm: '3rem', md: '3.5rem' }, mb: 2 }}>
-                {t('home.heroTitle')}
-              </Typography>
-              <Typography variant="h6" color="text.secondary" fontWeight={400} sx={{ mb: 4, maxWidth: 480 }}>
-                {t('home.heroSubtitle')}
-              </Typography>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Button component={RouterLink} to="/products" variant="contained" size="large" endIcon={<ArrowForwardIcon />}>
-                  {t('home.shopNow')}
-                </Button>
-                <Button component={RouterLink} to="/products?filter=sale" variant="outlined" size="large">
-                  {t('home.viewDeals')}
-                </Button>
-              </Stack>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Box
-                component="img"
-                src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&h=700&q=80"
-                alt={t('home.heroTitle')}
-                sx={{ width: '100%', borderRadius: 4, boxShadow: 8, display: 'block' }}
-              />
-            </Grid>
-          </Grid>
+        <Container maxWidth="lg" sx={{ position: 'relative' }}>
+          <Box sx={{ py: { xs: 10, md: 16 }, maxWidth: 560 }}>
+            <Chip label={t('home.newSeason')} color="secondary" size="small" sx={{ mb: 2 }} />
+            <Typography variant="h1" sx={{ fontSize: { xs: '2.25rem', sm: '3rem', md: '3.5rem' }, mb: 2, color: '#fff' }}>
+              {t('home.heroTitle')}
+            </Typography>
+            <Typography variant="h6" fontWeight={400} sx={{ mb: 4, color: 'rgba(255,255,255,0.85)' }}>
+              {t('home.heroSubtitle')}
+            </Typography>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <Button component={RouterLink} to="/products" variant="contained" color="secondary" size="large" endIcon={<ArrowForwardIcon />}>
+                {t('home.shopNow')}
+              </Button>
+              <Button
+                component={RouterLink}
+                to="/products?filter=sale"
+                variant="outlined"
+                size="large"
+                sx={{
+                  color: '#fff',
+                  borderColor: 'rgba(255,255,255,0.6)',
+                  '&:hover': { borderColor: '#fff', bgcolor: 'rgba(255,255,255,0.1)' },
+                }}
+              >
+                {t('home.viewDeals')}
+              </Button>
+            </Stack>
+          </Box>
         </Container>
       </Box>
 

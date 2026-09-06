@@ -192,7 +192,7 @@ export function ProductsPage() {
         </Box>
       </Stack>
 
-      <Drawer anchor={lang === 'ar' ? 'right' : 'left'} open={mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
+      <Drawer anchor="left" open={mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 2 }}>
           <Typography variant="h6" fontWeight={800}>{t('products.filters')}</Typography>
           <IconButton onClick={() => setMobileFiltersOpen(false)}><CloseIcon /></IconButton>
