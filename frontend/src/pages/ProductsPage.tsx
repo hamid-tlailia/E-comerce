@@ -53,8 +53,13 @@ export function ProductsPage() {
     if (activeCategory) list = list.filter((p) => p.category === activeCategory)
     if (activeFilter) list = list.filter((p) => p.tags.includes(activeFilter as 'new' | 'sale' | 'bestseller'))
     if (query) {
-      const q = query.toLowerCase()
-      list = list.filter((p) => p.title.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q))
+      const q = query.trim().toLowerCase()
+      list = list.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.titleAr.includes(query.trim()) ||
+          p.brand.toLowerCase().includes(q),
+      )
     }
     switch (sort) {
       case 'price-asc':
