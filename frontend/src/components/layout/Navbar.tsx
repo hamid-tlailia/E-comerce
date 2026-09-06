@@ -13,6 +13,8 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Menu,
+  MenuItem,
   Stack,
   TextField,
   Toolbar,
@@ -28,7 +30,8 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import CloseIcon from '@mui/icons-material/Close'
-import LanguageIcon from '@mui/icons-material/Language'
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
+import CheckIcon from '@mui/icons-material/Check'
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom'
 import { categories } from '../../data/products'
 import { useCart } from '../../context/CartContext'
@@ -40,9 +43,10 @@ export function Navbar() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [search, setSearch] = useState('')
+  const [settingsAnchor, setSettingsAnchor] = useState<null | HTMLElement>(null)
   const { itemCount } = useCart()
   const { mode, toggleMode } = useColorMode()
-  const { lang, toggleLang, t } = useLanguage()
+  const { lang, setLang, t } = useLanguage()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -93,7 +97,7 @@ export function Navbar() {
               fontWeight={800}
               sx={{ textDecoration: 'none', color: 'text.primary', flexShrink: 0 }}
             >
-              Aurora<Box component="span" sx={{ color: 'primary.main' }}>Shop</Box>
+              Hamidos<Box component="span" sx={{ color: 'primary.main' }}>Shop</Box>
             </Typography>
 
             {!isMobile && (
@@ -141,17 +145,47 @@ export function Navbar() {
             )}
 
             <Stack direction="row" spacing={0.5} sx={{ ml: 'auto' }}>
-              <Button
-                onClick={toggleLang}
-                color="inherit"
-                startIcon={<LanguageIcon />}
-                sx={{ minWidth: 0, px: 1.25 }}
-              >
-                {lang === 'en' ? 'العربية' : 'English'}
-              </Button>
               <IconButton onClick={toggleMode} aria-label="Toggle color mode">
                 {mode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
               </IconButton>
+              <IconButton
+                onClick={(e) => setSettingsAnchor(e.currentTarget)}
+                aria-label={t('nav.settings')}
+                aria-haspopup="true"
+              >
+                <SettingsOutlinedIcon />
+              </IconButton>
+              <Menu
+                anchorEl={settingsAnchor}
+                open={Boolean(settingsAnchor)}
+                onClose={() => setSettingsAnchor(null)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: lang === 'ar' ? 'left' : 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: lang === 'ar' ? 'left' : 'right' }}
+              >
+                <Typography variant="overline" sx={{ px: 2, py: 0.5, display: 'block', color: 'text.secondary' }}>
+                  {t('nav.language')}
+                </Typography>
+                <MenuItem
+                  selected={lang === 'en'}
+                  onClick={() => {
+                    setLang('en')
+                    setSettingsAnchor(null)
+                  }}
+                >
+                  <ListItemIcon>{lang === 'en' && <CheckIcon fontSize="small" />}</ListItemIcon>
+                  <ListItemText>English</ListItemText>
+                </MenuItem>
+                <MenuItem
+                  selected={lang === 'ar'}
+                  onClick={() => {
+                    setLang('ar')
+                    setSettingsAnchor(null)
+                  }}
+                >
+                  <ListItemIcon>{lang === 'ar' && <CheckIcon fontSize="small" />}</ListItemIcon>
+                  <ListItemText>العربية</ListItemText>
+                </MenuItem>
+              </Menu>
               {!isMobile && (
                 <IconButton component={RouterLink} to="/wishlist" aria-label={t('nav.wishlist')}>
                   <FavoriteBorderIcon />

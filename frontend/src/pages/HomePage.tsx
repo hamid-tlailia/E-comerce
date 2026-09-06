@@ -61,7 +61,7 @@ export function HomePage() {
             <Grid item xs={12} md={6}>
               <Box
                 component="img"
-                src="https://loremflickr.com/900/700/lifestyle,shopping?lock=99"
+                src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&h=700&q=80"
                 alt={t('home.heroTitle')}
                 sx={{ width: '100%', borderRadius: 4, boxShadow: 8, display: 'block' }}
               />

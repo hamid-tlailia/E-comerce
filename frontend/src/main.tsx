@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
 import '@fontsource/inter/600.css'
@@ -20,7 +20,7 @@ import { WishlistProvider } from './context/WishlistContext'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <LanguageProvider>
         <ColorModeProvider>
           <SnackbarProvider>
@@ -32,6 +32,6 @@ createRoot(document.getElementById('root')!).render(
           </SnackbarProvider>
         </ColorModeProvider>
       </LanguageProvider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>,
 )

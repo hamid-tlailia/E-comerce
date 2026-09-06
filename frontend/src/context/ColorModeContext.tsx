@@ -13,7 +13,7 @@ interface ColorModeContextValue {
 }
 
 const ColorModeContext = createContext<ColorModeContextValue>({ mode: 'light', toggleMode: () => {} })
-const STORAGE_KEY = 'aurora-shop-mode'
+const STORAGE_KEY = 'hamidos-shop-mode'
 
 const ltrCache = createCache({ key: 'mui-ltr', stylisPlugins: [prefixer] })
 const rtlCache = createCache({ key: 'mui-rtl', stylisPlugins: [prefixer, rtlPlugin] })

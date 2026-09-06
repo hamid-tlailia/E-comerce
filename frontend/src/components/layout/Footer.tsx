@@ -6,11 +6,22 @@ import CreditCardIcon from '@mui/icons-material/CreditCard'
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined'
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined'
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined'
+import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
+import { useSnackbar } from '../../context/SnackbarContext'
 
 export function Footer() {
   const { t } = useLanguage()
+  const { notify } = useSnackbar()
+  const [email, setEmail] = useState('')
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+    notify(t('footer.subscribed'))
+    setEmail('')
+  }
 
   const perks = [
     { icon: <LocalShippingOutlinedIcon />, title: t('footer.freeShipping'), desc: t('footer.freeShippingDesc') },
@@ -43,7 +54,7 @@ export function Footer() {
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={4}>
             <Typography variant="h6" fontWeight={800} gutterBottom>
-              Aurora<Box component="span" sx={{ color: 'primary.main' }}>Shop</Box>
+              Hamidos<Box component="span" sx={{ color: 'primary.main' }}>Shop</Box>
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2, maxWidth: 280 }}>
               {t('footer.brandDesc')}
@@ -73,10 +84,10 @@ export function Footer() {
           <Grid item xs={6} sm={3} md={2}>
             <Typography variant="subtitle2" fontWeight={700} gutterBottom>{t('footer.supportHeading')}</Typography>
             <Stack spacing={1}>
-              <Link href="#" underline="hover" color="text.secondary" variant="body2">{t('footer.contactUs')}</Link>
-              <Link href="#" underline="hover" color="text.secondary" variant="body2">{t('footer.shippingInfo')}</Link>
-              <Link href="#" underline="hover" color="text.secondary" variant="body2">{t('footer.returns')}</Link>
-              <Link href="#" underline="hover" color="text.secondary" variant="body2">{t('footer.faq')}</Link>
+              <Link component={RouterLink} to="/contact" underline="hover" color="text.secondary" variant="body2">{t('footer.contactUs')}</Link>
+              <Link component={RouterLink} to="/shipping" underline="hover" color="text.secondary" variant="body2">{t('footer.shippingInfo')}</Link>
+              <Link component={RouterLink} to="/returns" underline="hover" color="text.secondary" variant="body2">{t('footer.returns')}</Link>
+              <Link component={RouterLink} to="/faq" underline="hover" color="text.secondary" variant="body2">{t('footer.faq')}</Link>
             </Stack>
           </Grid>
 
@@ -85,9 +96,17 @@ export function Footer() {
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
               {t('footer.newsletterDesc')}
             </Typography>
-            <Stack direction="row" spacing={1}>
-              <TextField size="small" placeholder={t('footer.emailPlaceholder')} fullWidth />
-              <Button variant="contained" sx={{ flexShrink: 0 }}>{t('footer.subscribe')}</Button>
+            <Stack direction="row" spacing={1} component="form" onSubmit={handleSubscribe}>
+              <TextField
+                size="small"
+                type="email"
+                placeholder={t('footer.emailPlaceholder')}
+                fullWidth
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Button type="submit" variant="contained" sx={{ flexShrink: 0 }}>{t('footer.subscribe')}</Button>
             </Stack>
           </Grid>
         </Grid>
@@ -98,7 +117,7 @@ export function Footer() {
       <Container maxWidth="lg" sx={{ py: 2.5 }}>
         <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems="center" spacing={1}>
           <Typography variant="caption" color="text.secondary">
-            © {new Date().getFullYear()} AuroraShop. {t('footer.rights')}
+            © {new Date().getFullYear()} HamidosShop. {t('footer.rights')}
           </Typography>
           <Typography variant="caption" color="text.secondary">
             {t('footer.paymentMethods')}

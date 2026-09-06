@@ -28,23 +28,56 @@ import { formatPrice } from '../components/common/PriceTag'
 import { useLanguage } from '../context/LanguageContext'
 import { useSnackbar } from '../context/SnackbarContext'
 
-const countries = ['United States', 'France', 'Algeria', 'Morocco', 'Tunisia', 'United Kingdom', 'Germany', 'Other']
+const countries = [
+  'United States',
+  'United Kingdom',
+  'France',
+  'Germany',
+  // Gulf
+  'Saudi Arabia',
+  'United Arab Emirates',
+  'Qatar',
+  'Kuwait',
+  'Bahrain',
+  'Oman',
+  // North Africa
+  'Algeria',
+  'Morocco',
+  'Tunisia',
+  'Egypt',
+  'Libya',
+  'Other',
+]
 
 const countryLabelsAr: Record<string, string> = {
   'United States': 'الولايات المتحدة',
+  'United Kingdom': 'المملكة المتحدة',
   France: 'فرنسا',
+  Germany: 'ألمانيا',
+  'Saudi Arabia': 'السعودية',
+  'United Arab Emirates': 'الإمارات العربية المتحدة',
+  Qatar: 'قطر',
+  Kuwait: 'الكويت',
+  Bahrain: 'البحرين',
+  Oman: 'عُمان',
   Algeria: 'الجزائر',
   Morocco: 'المغرب',
   Tunisia: 'تونس',
-  'United Kingdom': 'المملكة المتحدة',
-  Germany: 'ألمانيا',
+  Egypt: 'مصر',
+  Libya: 'ليبيا',
   Other: 'أخرى',
 }
 
 const localCardByCountry: Record<string, string> = {
+  'Saudi Arabia': 'mada',
+  'United Arab Emirates': 'UAE Direct Debit',
+  Qatar: 'Qatar Debit Card',
+  Kuwait: 'KNET',
+  Bahrain: 'BENEFIT',
   Algeria: 'Edahabia / CIB',
   Morocco: 'CMI Card',
   Tunisia: 'e-DINAR',
+  Egypt: 'Meeza',
 }
 
 export function CheckoutPage() {

@@ -6,11 +6,12 @@ interface LanguageContextValue {
   lang: Lang
   dir: 'ltr' | 'rtl'
   toggleLang: () => void
+  setLang: (lang: Lang) => void
   t: (path: string, vars?: Record<string, string | number>) => string
 }
 
 const LanguageContext = createContext<LanguageContextValue | undefined>(undefined)
-const STORAGE_KEY = 'aurora-shop-lang'
+const STORAGE_KEY = 'hamidos-shop-lang'
 
 function resolve(obj: unknown, path: string): string {
   const value = path.split('.').reduce<unknown>((acc, key) => {
@@ -48,7 +49,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     [lang],
   )
 
-  return <LanguageContext.Provider value={{ lang, dir, toggleLang, t }}>{children}</LanguageContext.Provider>
+  return <LanguageContext.Provider value={{ lang, dir, toggleLang, setLang, t }}>{children}</LanguageContext.Provider>
 }
 
 export function useLanguage() {

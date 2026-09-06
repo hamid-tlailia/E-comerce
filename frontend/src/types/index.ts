@@ -31,7 +31,6 @@ export interface Category {
   name: string
   nameAr: string
   icon: string
-  image: string
 }
 
 export type Lang = 'en' | 'ar'

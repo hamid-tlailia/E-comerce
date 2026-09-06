@@ -1,22 +1,22 @@
 import type { Category, Product } from '../types'
 
-const img = (keyword: string, seed: number, n = 4) =>
-  Array.from({ length: n }, (_, i) => `https://loremflickr.com/800/800/${keyword}?lock=${seed * 100 + i}`)
+const unsplash = (id: string, w = 800, h = 800) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&h=${h}&q=80`
 
 export const categories: Category[] = [
-  { id: 'electronics', name: 'Electronics', nameAr: 'الإلكترونيات', icon: 'DevicesOther', image: 'https://loremflickr.com/600/400/electronics?lock=1' },
-  { id: 'fashion', name: 'Fashion', nameAr: 'الأزياء', icon: 'Checkroom', image: 'https://loremflickr.com/600/400/fashion?lock=2' },
-  { id: 'home', name: 'Home & Living', nameAr: 'المنزل والمعيشة', icon: 'Chair', image: 'https://loremflickr.com/600/400/homedecor?lock=3' },
-  { id: 'beauty', name: 'Beauty', nameAr: 'الجمال', icon: 'Spa', image: 'https://loremflickr.com/600/400/cosmetics?lock=4' },
-  { id: 'sports', name: 'Sports', nameAr: 'الرياضة', icon: 'SportsBasketball', image: 'https://loremflickr.com/600/400/sports?lock=5' },
-  { id: 'accessories', name: 'Accessories', nameAr: 'الإكسسوارات', icon: 'Watch', image: 'https://loremflickr.com/600/400/accessories?lock=6' },
+  { id: 'electronics', name: 'Electronics', nameAr: 'الإلكترونيات', icon: 'DevicesOther' },
+  { id: 'fashion', name: 'Fashion', nameAr: 'الأزياء', icon: 'Checkroom' },
+  { id: 'home', name: 'Home & Living', nameAr: 'المنزل والمعيشة', icon: 'Chair' },
+  { id: 'beauty', name: 'Beauty', nameAr: 'الجمال', icon: 'Spa' },
+  { id: 'sports', name: 'Sports', nameAr: 'الرياضة', icon: 'SportsBasketball' },
+  { id: 'accessories', name: 'Accessories', nameAr: 'الإكسسوارات', icon: 'Watch' },
 ]
 
 export const products: Product[] = [
   {
     id: 'p1', slug: 'aurora-wireless-headphones', title: 'Aurora Wireless Headphones', titleAr: 'سماعات أورورا اللاسلكية', brand: 'Sonique',
     category: 'electronics', price: 129.99, oldPrice: 179.99, currency: 'USD', rating: 4.6, reviewsCount: 328,
-    images: img('headphones', 1, 4), colors: ['#111827', '#e5e7eb', '#7c3aed'], stock: 24,
+    images: [unsplash('1505740420928-5e560c06d30e')], colors: ['#111827', '#e5e7eb', '#7c3aed'], stock: 24,
     description: 'Immersive over-ear headphones with active noise cancellation, 40-hour battery life, and studio-tuned sound.',
     descriptionAr: 'سماعات رأس غامرة بخاصية إلغاء الضوضاء النشط، وبطارية تدوم 40 ساعة، وصوت باحترافية الاستوديو.',
     highlights: ['Active Noise Cancellation', '40h battery life', 'Bluetooth 5.3', 'Foldable design'],
@@ -25,7 +25,7 @@ export const products: Product[] = [
   },
   {
     id: 'p2', slug: 'nova-smartwatch-se', title: 'Nova Smartwatch SE', titleAr: 'ساعة نوفا الذكية SE', brand: 'Pulse', category: 'electronics',
-    price: 199.0, currency: 'USD', rating: 4.4, reviewsCount: 152, images: img('smartwatch', 2, 4),
+    price: 199.0, currency: 'USD', rating: 4.4, reviewsCount: 152, images: [unsplash('1523275335684-37898b6baf30')],
     colors: ['#111827', '#f43f5e'], stock: 40,
     description: 'Track your health and stay connected with a vibrant AMOLED display, GPS, and 10-day battery life.',
     descriptionAr: 'تابع صحتك وابقَ على اتصال بشاشة AMOLED نابضة بالحياة، ونظام تحديد المواقع GPS، وبطارية تدوم 10 أيام.',
@@ -35,7 +35,7 @@ export const products: Product[] = [
   },
   {
     id: 'p3', slug: 'skyline-running-jacket', title: 'Skyline Running Jacket', titleAr: 'سترة الجري سكايلاين', brand: 'Ventra', category: 'fashion',
-    price: 79.5, oldPrice: 99.0, currency: 'USD', rating: 4.3, reviewsCount: 89, images: img('windbreaker', 3, 4),
+    price: 79.5, oldPrice: 99.0, currency: 'USD', rating: 4.3, reviewsCount: 89, images: [unsplash('1551028719-00167b16eac5')],
     colors: ['#0f172a', '#facc15', '#ef4444'], stock: 60,
     description: 'Lightweight, windproof running jacket with reflective details for low-light visibility.',
     descriptionAr: 'سترة جري خفيفة الوزن ومقاومة للرياح مع تفاصيل عاكسة للرؤية في الإضاءة المنخفضة.',
@@ -45,7 +45,7 @@ export const products: Product[] = [
   },
   {
     id: 'p4', slug: 'linen-oversized-shirt', title: 'Linen Oversized Shirt', titleAr: 'قميص كتان واسع', brand: 'Maison Lin', category: 'fashion',
-    price: 45.0, currency: 'USD', rating: 4.7, reviewsCount: 211, images: img('linenshirt', 4, 4),
+    price: 45.0, currency: 'USD', rating: 4.7, reviewsCount: 211, images: [unsplash('1596755094514-f87e34085b2c')],
     colors: ['#f5f5f4', '#57534e', '#a8a29e'], stock: 75,
     description: 'Breathable 100% linen shirt with a relaxed fit, perfect for warm days.',
     descriptionAr: 'قميص من الكتان الخالص 100% بقصة مريحة، مثالي للأيام الدافئة.',
@@ -55,7 +55,7 @@ export const products: Product[] = [
   },
   {
     id: 'p5', slug: 'terra-ceramic-vase-set', title: 'Terra Ceramic Vase Set', titleAr: 'طقم مزهريات تيرا الخزفية', brand: 'Loam & Co', category: 'home',
-    price: 58.0, currency: 'USD', rating: 4.8, reviewsCount: 64, images: img('ceramicvase', 5, 4), stock: 30,
+    price: 58.0, currency: 'USD', rating: 4.8, reviewsCount: 64, images: [unsplash('1610701596007-11502861dcfa')], stock: 30,
     description: 'A set of three handcrafted ceramic vases in earthy tones to elevate any room.',
     descriptionAr: 'طقم من ثلاث مزهريات خزفية مصنوعة يدويًا بألوان ترابية لإضافة لمسة جمالية لأي غرفة.',
     highlights: ['Handcrafted ceramic', 'Set of 3', 'Indoor use'],
@@ -64,7 +64,7 @@ export const products: Product[] = [
   },
   {
     id: 'p6', slug: 'glow-serum-vitamin-c', title: 'Glow Serum Vitamin C', titleAr: 'سيروم فيتامين سي المضيء', brand: 'Luma', category: 'beauty',
-    price: 32.0, oldPrice: 40.0, currency: 'USD', rating: 4.5, reviewsCount: 402, images: img('skincare', 6, 4), stock: 120,
+    price: 32.0, oldPrice: 40.0, currency: 'USD', rating: 4.5, reviewsCount: 402, images: [unsplash('1556228720-195a672e8a03')], stock: 120,
     description: 'Brightening vitamin C serum that evens skin tone and boosts radiance.',
     descriptionAr: 'سيروم فيتامين سي مضيء يوحّد لون البشرة ويعزز إشراقتها.',
     highlights: ['20% Vitamin C', 'Cruelty-free', 'For all skin types'],
@@ -73,7 +73,7 @@ export const products: Product[] = [
   },
   {
     id: 'p7', slug: 'flex-yoga-mat-pro', title: 'Flex Yoga Mat Pro', titleAr: 'سجادة يوغا فليكس برو', brand: 'Zenith', category: 'sports',
-    price: 39.99, currency: 'USD', rating: 4.6, reviewsCount: 178, images: img('yogamat', 7, 4),
+    price: 39.99, currency: 'USD', rating: 4.6, reviewsCount: 178, images: [unsplash('1544367567-0f2fcb009e0b')],
     colors: ['#14b8a6', '#8b5cf6'], stock: 90,
     description: 'Extra-thick non-slip yoga mat with alignment lines and carry strap.',
     descriptionAr: 'سجادة يوغا سميكة ومانعة للانزلاق مع خطوط محاذاة وحزام حمل.',
@@ -83,7 +83,7 @@ export const products: Product[] = [
   },
   {
     id: 'p8', slug: 'orbit-leather-watch', title: 'Orbit Leather Watch', titleAr: 'ساعة أوربت الجلدية', brand: 'Chronly', category: 'accessories',
-    price: 149.0, currency: 'USD', rating: 4.4, reviewsCount: 97, images: img('wristwatch', 8, 4),
+    price: 149.0, currency: 'USD', rating: 4.4, reviewsCount: 97, images: [unsplash('1524805444758-089113d48a6d')],
     colors: ['#78350f', '#111827'], stock: 22,
     description: 'Minimalist leather-strap watch with a sapphire-coated dial and Japanese movement.',
     descriptionAr: 'ساعة بتصميم بسيط وسوار جلدي، بمينا مطلي بالياقوت وحركة يابانية.',
@@ -93,7 +93,7 @@ export const products: Product[] = [
   },
   {
     id: 'p9', slug: 'echo-bluetooth-speaker', title: 'Echo Portable Speaker', titleAr: 'سماعة إيكو المحمولة', brand: 'Sonique', category: 'electronics',
-    price: 59.99, oldPrice: 74.99, currency: 'USD', rating: 4.2, reviewsCount: 143, images: img('bluetoothspeaker', 9, 4), stock: 55,
+    price: 59.99, oldPrice: 74.99, currency: 'USD', rating: 4.2, reviewsCount: 143, images: [unsplash('1608043152269-423dbba4e7e1')], stock: 55,
     description: 'Compact waterproof speaker with punchy bass and 12-hour playtime.',
     descriptionAr: 'سماعة صغيرة مقاومة للماء بصوت جهير قوي وتشغيل يدوم 12 ساعة.',
     highlights: ['IPX7 waterproof', '12h playtime', 'Built-in mic'],
@@ -102,7 +102,7 @@ export const products: Product[] = [
   },
   {
     id: 'p10', slug: 'classic-denim-jacket', title: 'Classic Denim Jacket', titleAr: 'جاكيت الدنيم الكلاسيكي', brand: 'Urban Fold', category: 'fashion',
-    price: 68.0, currency: 'USD', rating: 4.5, reviewsCount: 134, images: img('denimjacket', 10, 4),
+    price: 68.0, currency: 'USD', rating: 4.5, reviewsCount: 134, images: [unsplash('1543076447-215ad9ba6923')],
     colors: ['#1d4ed8', '#0f172a'], stock: 48,
     description: 'Timeless denim jacket with a tailored fit and durable stitching.',
     descriptionAr: 'جاكيت دنيم كلاسيكي بقصة أنيقة وخياطة متينة.',
@@ -112,7 +112,7 @@ export const products: Product[] = [
   },
   {
     id: 'p11', slug: 'nimbus-throw-blanket', title: 'Nimbus Throw Blanket', titleAr: 'بطانية نيمبوس', brand: 'Loam & Co', category: 'home',
-    price: 36.0, currency: 'USD', rating: 4.7, reviewsCount: 88, images: img('throwblanket', 11, 4),
+    price: 36.0, currency: 'USD', rating: 4.7, reviewsCount: 88, images: [unsplash('1616627561950-9f746e330187')],
     colors: ['#e7e5e4', '#78716c'], stock: 65,
     description: 'Ultra-soft woven throw blanket, perfect for cozy evenings.',
     descriptionAr: 'بطانية منسوجة فائقة النعومة، مثالية للأمسيات الدافئة.',
@@ -122,7 +122,7 @@ export const products: Product[] = [
   },
   {
     id: 'p12', slug: 'matte-lip-tint-trio', title: 'Matte Lip Tint Trio', titleAr: 'طقم أحمر شفاه مطفي ثلاثي', brand: 'Luma', category: 'beauty',
-    price: 24.0, currency: 'USD', rating: 4.6, reviewsCount: 256, images: img('lipstick', 12, 4), stock: 140,
+    price: 24.0, currency: 'USD', rating: 4.6, reviewsCount: 256, images: [unsplash('1586495777744-4413f21062fa')], stock: 140,
     description: 'A trio of long-lasting matte lip tints in versatile everyday shades.',
     descriptionAr: 'طقم من ثلاثة أحمر شفاه مطفي طويل الثبات بألوان يومية متعددة الاستخدامات.',
     highlights: ['Long-lasting matte finish', 'Set of 3 shades', 'Vegan formula'],
@@ -131,7 +131,7 @@ export const products: Product[] = [
   },
   {
     id: 'p13', slug: 'trailblazer-running-shoes', title: 'Trailblazer Running Shoes', titleAr: 'حذاء الجري تريل بليزر', brand: 'Ventra', category: 'sports',
-    price: 89.0, oldPrice: 110.0, currency: 'USD', rating: 4.5, reviewsCount: 312, images: img('runningshoes', 13, 4),
+    price: 89.0, oldPrice: 110.0, currency: 'USD', rating: 4.5, reviewsCount: 312, images: [unsplash('1542291026-7eec264c27ff')],
     colors: ['#111827', '#f97316', '#22c55e'], stock: 70,
     description: 'Responsive cushioning and breathable mesh for your daily miles.',
     descriptionAr: 'توسيد مرن وشبك قابل للتهوية لعدائك اليومي.',
@@ -141,7 +141,7 @@ export const products: Product[] = [
   },
   {
     id: 'p14', slug: 'aria-sunglasses', title: 'Aria Polarized Sunglasses', titleAr: 'نظارة أريا الشمسية المستقطبة', brand: 'Chronly', category: 'accessories',
-    price: 54.0, currency: 'USD', rating: 4.3, reviewsCount: 71, images: img('sunglasses', 14, 4),
+    price: 54.0, currency: 'USD', rating: 4.3, reviewsCount: 71, images: [unsplash('1572635196237-14b3f281503f')],
     colors: ['#111827', '#78350f'], stock: 38,
     description: 'Polarized lenses with UV400 protection in a timeless frame.',
     descriptionAr: 'عدسات مستقطبة بحماية UV400 ضمن إطار أنيق خالد.',
@@ -151,7 +151,7 @@ export const products: Product[] = [
   },
   {
     id: 'p15', slug: 'pulse-fitness-tracker', title: 'Pulse Fitness Tracker', titleAr: 'سوار بلس لتتبع اللياقة', brand: 'Pulse', category: 'electronics',
-    price: 49.99, currency: 'USD', rating: 4.1, reviewsCount: 205, images: img('fitnessband', 15, 4), stock: 85,
+    price: 49.99, currency: 'USD', rating: 4.1, reviewsCount: 205, images: [unsplash('1508685096489-7aacd43bd3b1')], stock: 85,
     description: 'Slim fitness tracker with sleep tracking and 15+ workout modes.',
     descriptionAr: 'سوار لياقة نحيف يتتبع النوم ويضم أكثر من 15 وضع تمرين.',
     highlights: ['15+ sport modes', 'Sleep tracking', '7-day battery'],
@@ -160,7 +160,7 @@ export const products: Product[] = [
   },
   {
     id: 'p16', slug: 'oakwood-desk-lamp', title: 'Oakwood Desk Lamp', titleAr: 'مصباح مكتب أوكوود', brand: 'Loam & Co', category: 'home',
-    price: 42.0, oldPrice: 52.0, currency: 'USD', rating: 4.8, reviewsCount: 59, images: img('desklamp', 16, 4), stock: 27,
+    price: 42.0, oldPrice: 52.0, currency: 'USD', rating: 4.8, reviewsCount: 59, images: [unsplash('1507473885765-e6ed057f782c')], stock: 27,
     description: 'Warm-light desk lamp with a solid oak base and touch dimmer.',
     descriptionAr: 'مصباح مكتبي بضوء دافئ وقاعدة من خشب البلوط الصلب مع خافت لمس.',
     highlights: ['Touch dimmer', 'Solid oak base', 'Warm LED light'],

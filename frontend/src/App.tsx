@@ -10,6 +10,10 @@ import { OrderSuccessPage } from './pages/OrderSuccessPage'
 import { WishlistPage } from './pages/WishlistPage'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
+import { FAQPage } from './pages/FAQPage'
+import { ContactPage } from './pages/ContactPage'
+import { ShippingInfoPage } from './pages/ShippingInfoPage'
+import { ReturnsPage } from './pages/ReturnsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 
 function App() {
@@ -27,6 +31,10 @@ function App() {
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/shipping" element={<ShippingInfoPage />} />
+          <Route path="/returns" element={<ReturnsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
