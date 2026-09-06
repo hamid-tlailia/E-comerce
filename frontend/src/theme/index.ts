@@ -1,8 +1,10 @@
 import { createTheme } from '@mui/material/styles'
 import type { PaletteMode } from '@mui/material'
+import type { Lang } from '../types'
 
-export const getTheme = (mode: PaletteMode) =>
+export const getTheme = (mode: PaletteMode, lang: Lang = 'en') =>
   createTheme({
+    direction: lang === 'ar' ? 'rtl' : 'ltr',
     palette: {
       mode,
       primary: { main: '#4F46E5', light: '#818CF8', dark: '#3730A3', contrastText: '#fff' },
@@ -22,7 +24,10 @@ export const getTheme = (mode: PaletteMode) =>
     },
     shape: { borderRadius: 14 },
     typography: {
-      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily:
+        lang === 'ar'
+          ? '"Tajawal", "Inter", "Roboto", "Helvetica", "Arial", sans-serif'
+          : '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
       h1: { fontWeight: 800, letterSpacing: -1 },
       h2: { fontWeight: 800, letterSpacing: -0.5 },
       h3: { fontWeight: 700, letterSpacing: -0.5 },

@@ -28,16 +28,12 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import CloseIcon from '@mui/icons-material/Close'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import LanguageIcon from '@mui/icons-material/Language'
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom'
 import { categories } from '../../data/products'
 import { useCart } from '../../context/CartContext'
 import { useColorMode } from '../../context/ColorModeContext'
-
-const navLinks = [
-  { label: 'New Arrivals', to: '/products?filter=new' },
-  { label: 'Best Sellers', to: '/products?filter=bestseller' },
-  { label: 'Deals', to: '/products?filter=sale' },
-]
+import { useLanguage } from '../../context/LanguageContext'
 
 export function Navbar() {
   const theme = useTheme()
@@ -46,7 +42,19 @@ export function Navbar() {
   const [search, setSearch] = useState('')
   const { itemCount } = useCart()
   const { mode, toggleMode } = useColorMode()
+  const { lang, toggleLang, t } = useLanguage()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const navLinks = [
+    { label: t('nav.newArrivals'), to: '/products?filter=new' },
+    { label: t('nav.bestSellers'), to: '/products?filter=bestseller' },
+    { label: t('nav.deals'), to: '/products?filter=sale' },
+  ]
+
+  const currentUrl = location.pathname + location.search
+  const isShopActive = location.pathname === '/products' && !location.search
+  const isLinkActive = (to: string) => currentUrl === to
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -59,7 +67,7 @@ export function Navbar() {
       <Box sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', py: 0.6 }}>
         <Container maxWidth="lg">
           <Typography variant="caption" fontWeight={600} textAlign="center" display="block">
-            Free shipping on orders over $50 · Secure checkout · Easy 30-day returns
+            {t('nav.announcement')}
           </Typography>
         </Container>
       </Box>
@@ -73,7 +81,7 @@ export function Navbar() {
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ gap: { xs: 1, md: 3 }, py: 1 }}>
             {isMobile && (
-              <IconButton onClick={() => setDrawerOpen(true)} aria-label="Open menu">
+              <IconButton onClick={() => setDrawerOpen(true)} aria-label={t('nav.menu')}>
                 <MenuIcon />
               </IconButton>
             )}
@@ -90,11 +98,22 @@ export function Navbar() {
 
             {!isMobile && (
               <Stack direction="row" spacing={0.5} sx={{ flexGrow: 1 }}>
-                <Button component={RouterLink} to="/products" color="inherit">
-                  Shop
+                <Button
+                  component={RouterLink}
+                  to="/products"
+                  color={isShopActive ? 'primary' : 'inherit'}
+                  sx={{ fontWeight: isShopActive ? 700 : 500, bgcolor: isShopActive ? 'action.selected' : 'transparent' }}
+                >
+                  {t('nav.shop')}
                 </Button>
                 {navLinks.map((link) => (
-                  <Button key={link.label} component={RouterLink} to={link.to} color="inherit">
+                  <Button
+                    key={link.label}
+                    component={RouterLink}
+                    to={link.to}
+                    color={isLinkActive(link.to) ? 'primary' : 'inherit'}
+                    sx={{ fontWeight: isLinkActive(link.to) ? 700 : 500, bgcolor: isLinkActive(link.to) ? 'action.selected' : 'transparent' }}
+                  >
                     {link.label}
                   </Button>
                 ))}
@@ -106,7 +125,7 @@ export function Navbar() {
                 <TextField
                   fullWidth
                   size="small"
-                  placeholder="Search products…"
+                  placeholder={t('nav.search')}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   InputProps={{
@@ -122,20 +141,28 @@ export function Navbar() {
             )}
 
             <Stack direction="row" spacing={0.5} sx={{ ml: 'auto' }}>
+              <Button
+                onClick={toggleLang}
+                color="inherit"
+                startIcon={<LanguageIcon />}
+                sx={{ minWidth: 0, px: 1.25 }}
+              >
+                {lang === 'en' ? 'العربية' : 'English'}
+              </Button>
               <IconButton onClick={toggleMode} aria-label="Toggle color mode">
                 {mode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
               </IconButton>
               {!isMobile && (
-                <IconButton component={RouterLink} to="/wishlist" aria-label="Wishlist">
+                <IconButton component={RouterLink} to="/wishlist" aria-label={t('nav.wishlist')}>
                   <FavoriteBorderIcon />
                 </IconButton>
               )}
               {!isMobile && (
-                <IconButton component={RouterLink} to="/login" aria-label="Account">
+                <IconButton component={RouterLink} to="/login" aria-label={t('nav.account')}>
                   <PersonOutlineIcon />
                 </IconButton>
               )}
-              <IconButton component={RouterLink} to="/cart" aria-label="Cart">
+              <IconButton component={RouterLink} to="/cart" aria-label={t('nav.cart')}>
                 <Badge badgeContent={itemCount} color="secondary">
                   <ShoppingBagOutlinedIcon />
                 </Badge>
@@ -145,11 +172,11 @@ export function Navbar() {
         </Container>
       </AppBar>
 
-      <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+      <Drawer anchor={lang === 'ar' ? 'right' : 'left'} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <Box sx={{ width: 280 }} role="presentation">
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 2 }}>
             <Typography variant="h6" fontWeight={800}>
-              Menu
+              {t('nav.menu')}
             </Typography>
             <IconButton onClick={() => setDrawerOpen(false)} aria-label="Close menu">
               <CloseIcon />
@@ -159,7 +186,7 @@ export function Navbar() {
             <TextField
               fullWidth
               size="small"
-              placeholder="Search products…"
+              placeholder={t('nav.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               InputProps={{
@@ -173,11 +200,22 @@ export function Navbar() {
           </Box>
           <Divider />
           <List>
-            <ListItemButton component={RouterLink} to="/products" onClick={() => setDrawerOpen(false)}>
-              <ListItemText primary="Shop All" />
+            <ListItemButton
+              component={RouterLink}
+              to="/products"
+              selected={isShopActive}
+              onClick={() => setDrawerOpen(false)}
+            >
+              <ListItemText primary={t('products.allProducts')} />
             </ListItemButton>
             {navLinks.map((link) => (
-              <ListItemButton key={link.label} component={RouterLink} to={link.to} onClick={() => setDrawerOpen(false)}>
+              <ListItemButton
+                key={link.label}
+                component={RouterLink}
+                to={link.to}
+                selected={isLinkActive(link.to)}
+                onClick={() => setDrawerOpen(false)}
+              >
                 <ListItemText primary={link.label} />
               </ListItemButton>
             ))}
@@ -186,7 +224,7 @@ export function Navbar() {
           <List
             subheader={
               <Typography variant="overline" sx={{ px: 2, color: 'text.secondary' }}>
-                Categories
+                {t('nav.categories')}
               </Typography>
             }
           >
@@ -195,21 +233,22 @@ export function Navbar() {
                 key={cat.id}
                 component={RouterLink}
                 to={`/products?category=${cat.id}`}
+                selected={isLinkActive(`/products?category=${cat.id}`)}
                 onClick={() => setDrawerOpen(false)}
               >
-                <ListItemText primary={cat.name} />
+                <ListItemText primary={lang === 'ar' ? cat.nameAr : cat.name} />
               </ListItemButton>
             ))}
           </List>
           <Divider />
           <List>
-            <ListItemButton component={RouterLink} to="/wishlist" onClick={() => setDrawerOpen(false)}>
+            <ListItemButton component={RouterLink} to="/wishlist" selected={isLinkActive('/wishlist')} onClick={() => setDrawerOpen(false)}>
               <ListItemIcon><FavoriteBorderIcon /></ListItemIcon>
-              <ListItemText primary="Wishlist" />
+              <ListItemText primary={t('nav.wishlist')} />
             </ListItemButton>
-            <ListItemButton component={RouterLink} to="/login" onClick={() => setDrawerOpen(false)}>
+            <ListItemButton component={RouterLink} to="/login" selected={isLinkActive('/login')} onClick={() => setDrawerOpen(false)}>
               <ListItemIcon><PersonOutlineIcon /></ListItemIcon>
-              <ListItemText primary="Account" />
+              <ListItemText primary={t('nav.account')} />
             </ListItemButton>
           </List>
         </Box>

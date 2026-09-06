@@ -7,15 +7,18 @@ import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined'
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined'
 import { Link as RouterLink } from 'react-router-dom'
-
-const perks = [
-  { icon: <LocalShippingOutlinedIcon />, title: 'Free Shipping', desc: 'On orders over $50' },
-  { icon: <VerifiedUserOutlinedIcon />, title: 'Secure Payment', desc: 'International & local cards' },
-  { icon: <SupportAgentOutlinedIcon />, title: '24/7 Support', desc: "We're here to help" },
-  { icon: <CreditCardIcon />, title: 'Easy Returns', desc: '30-day return policy' },
-]
+import { useLanguage } from '../../context/LanguageContext'
 
 export function Footer() {
+  const { t } = useLanguage()
+
+  const perks = [
+    { icon: <LocalShippingOutlinedIcon />, title: t('footer.freeShipping'), desc: t('footer.freeShippingDesc') },
+    { icon: <VerifiedUserOutlinedIcon />, title: t('footer.securePayment'), desc: t('footer.securePaymentDesc') },
+    { icon: <SupportAgentOutlinedIcon />, title: t('footer.support'), desc: t('footer.supportDesc') },
+    { icon: <CreditCardIcon />, title: t('footer.easyReturns'), desc: t('footer.easyReturnsDesc') },
+  ]
+
   return (
     <Box component="footer" sx={{ bgcolor: 'background.paper', borderTop: '1px solid', borderColor: 'divider', mt: 8 }}>
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 5 } }}>
@@ -43,7 +46,7 @@ export function Footer() {
               Aurora<Box component="span" sx={{ color: 'primary.main' }}>Shop</Box>
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2, maxWidth: 280 }}>
-              Curated products, modern design, and a checkout experience built for every device and every country.
+              {t('footer.brandDesc')}
             </Typography>
             <Stack direction="row" spacing={1}>
               <IconButton size="small" sx={{ border: '1px solid', borderColor: 'divider' }} aria-label="Facebook">
@@ -59,32 +62,32 @@ export function Footer() {
           </Grid>
 
           <Grid item xs={6} sm={3} md={2}>
-            <Typography variant="subtitle2" fontWeight={700} gutterBottom>Shop</Typography>
+            <Typography variant="subtitle2" fontWeight={700} gutterBottom>{t('footer.shopHeading')}</Typography>
             <Stack spacing={1}>
-              <Link component={RouterLink} to="/products" underline="hover" color="text.secondary" variant="body2">All Products</Link>
-              <Link component={RouterLink} to="/products?filter=new" underline="hover" color="text.secondary" variant="body2">New Arrivals</Link>
-              <Link component={RouterLink} to="/products?filter=sale" underline="hover" color="text.secondary" variant="body2">Deals</Link>
+              <Link component={RouterLink} to="/products" underline="hover" color="text.secondary" variant="body2">{t('footer.allProducts')}</Link>
+              <Link component={RouterLink} to="/products?filter=new" underline="hover" color="text.secondary" variant="body2">{t('footer.newArrivals')}</Link>
+              <Link component={RouterLink} to="/products?filter=sale" underline="hover" color="text.secondary" variant="body2">{t('footer.deals')}</Link>
             </Stack>
           </Grid>
 
           <Grid item xs={6} sm={3} md={2}>
-            <Typography variant="subtitle2" fontWeight={700} gutterBottom>Support</Typography>
+            <Typography variant="subtitle2" fontWeight={700} gutterBottom>{t('footer.supportHeading')}</Typography>
             <Stack spacing={1}>
-              <Link href="#" underline="hover" color="text.secondary" variant="body2">Contact Us</Link>
-              <Link href="#" underline="hover" color="text.secondary" variant="body2">Shipping Info</Link>
-              <Link href="#" underline="hover" color="text.secondary" variant="body2">Returns</Link>
-              <Link href="#" underline="hover" color="text.secondary" variant="body2">FAQ</Link>
+              <Link href="#" underline="hover" color="text.secondary" variant="body2">{t('footer.contactUs')}</Link>
+              <Link href="#" underline="hover" color="text.secondary" variant="body2">{t('footer.shippingInfo')}</Link>
+              <Link href="#" underline="hover" color="text.secondary" variant="body2">{t('footer.returns')}</Link>
+              <Link href="#" underline="hover" color="text.secondary" variant="body2">{t('footer.faq')}</Link>
             </Stack>
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <Typography variant="subtitle2" fontWeight={700} gutterBottom>Stay in the loop</Typography>
+            <Typography variant="subtitle2" fontWeight={700} gutterBottom>{t('footer.newsletterHeading')}</Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-              Get 10% off your first order and updates on new arrivals.
+              {t('footer.newsletterDesc')}
             </Typography>
             <Stack direction="row" spacing={1}>
-              <TextField size="small" placeholder="Your email" fullWidth />
-              <Button variant="contained" sx={{ flexShrink: 0 }}>Subscribe</Button>
+              <TextField size="small" placeholder={t('footer.emailPlaceholder')} fullWidth />
+              <Button variant="contained" sx={{ flexShrink: 0 }}>{t('footer.subscribe')}</Button>
             </Stack>
           </Grid>
         </Grid>
@@ -95,10 +98,10 @@ export function Footer() {
       <Container maxWidth="lg" sx={{ py: 2.5 }}>
         <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems="center" spacing={1}>
           <Typography variant="caption" color="text.secondary">
-            © {new Date().getFullYear()} AuroraShop. All rights reserved.
+            © {new Date().getFullYear()} AuroraShop. {t('footer.rights')}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            Visa · Mastercard · PayPal · Local bank cards
+            {t('footer.paymentMethods')}
           </Typography>
         </Stack>
       </Container>

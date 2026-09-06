@@ -2,6 +2,7 @@ export interface Product {
   id: string
   slug: string
   title: string
+  titleAr: string
   brand: string
   category: string
   price: number
@@ -13,7 +14,9 @@ export interface Product {
   colors?: string[]
   stock: number
   description: string
+  descriptionAr: string
   highlights: string[]
+  highlightsAr: string[]
   tags: ('new' | 'sale' | 'bestseller')[]
 }
 
@@ -26,6 +29,9 @@ export interface CartItem {
 export interface Category {
   id: string
   name: string
+  nameAr: string
   icon: string
   image: string
 }
+
+export type Lang = 'en' | 'ar'

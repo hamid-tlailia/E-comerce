@@ -1,33 +1,36 @@
 import { Box, Button, Container, Link, Paper, Stack, TextField, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
+import { useLanguage } from '../context/LanguageContext'
 
 export function RegisterPage() {
+  const { t } = useLanguage()
+
   return (
     <Container maxWidth="sm" sx={{ py: { xs: 6, md: 10 } }}>
       <Paper variant="outlined" sx={{ p: { xs: 3, md: 5 } }}>
-        <Typography variant="h4" sx={{ mb: 0.5, fontSize: { xs: '1.5rem', md: '2rem' } }}>Create an account</Typography>
+        <Typography variant="h4" sx={{ mb: 0.5, fontSize: { xs: '1.5rem', md: '2rem' } }}>{t('auth.registerTitle')}</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-          Join AuroraShop for a faster checkout and order tracking.
+          {t('auth.registerSubtitle')}
         </Typography>
 
         <Stack spacing={2} component="form" onSubmit={(e) => e.preventDefault()}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField label="First name" fullWidth required />
-            <TextField label="Last name" fullWidth required />
+            <TextField label={t('auth.firstName')} fullWidth required />
+            <TextField label={t('auth.lastName')} fullWidth required />
           </Stack>
-          <TextField label="Email address" type="email" fullWidth required />
-          <TextField label="Password" type="password" fullWidth required />
-          <TextField label="Confirm password" type="password" fullWidth required />
+          <TextField label={t('auth.email')} type="email" fullWidth required />
+          <TextField label={t('auth.password')} type="password" fullWidth required />
+          <TextField label={t('auth.confirmPassword')} type="password" fullWidth required />
           <Button type="submit" variant="contained" size="large" fullWidth>
-            Create Account
+            {t('auth.createAccount')}
           </Button>
         </Stack>
 
         <Box sx={{ textAlign: 'center', mt: 3 }}>
           <Typography variant="body2" color="text.secondary">
-            Already have an account?{' '}
+            {t('auth.alreadyHaveAccount')}{' '}
             <Link component={RouterLink} to="/login" underline="hover" fontWeight={600}>
-              Sign in
+              {t('auth.signInLink')}
             </Link>
           </Typography>
         </Box>

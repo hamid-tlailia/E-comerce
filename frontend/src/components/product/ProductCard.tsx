@@ -1,21 +1,42 @@
+import { useState } from 'react'
 import { Box, Card, CardActionArea, CardContent, Chip, IconButton, Stack, Typography } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined'
+import CheckIcon from '@mui/icons-material/Check'
 import { Link as RouterLink } from 'react-router-dom'
 import type { Product } from '../../types'
 import { PriceTag } from '../common/PriceTag'
 import { RatingStars } from '../common/RatingStars'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
+import { useLanguage } from '../../context/LanguageContext'
+import { useSnackbar } from '../../context/SnackbarContext'
 
 export function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart()
   const { has, toggle } = useWishlist()
+  const { lang, t } = useLanguage()
+  const { notify } = useSnackbar()
   const wished = has(product.id)
+  const [justAdded, setJustAdded] = useState(false)
   const discount = product.oldPrice
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0
+  const title = lang === 'ar' ? product.titleAr : product.title
+
+  const handleAddToCart = () => {
+    addItem(product.id)
+    notify(t('snackbar.addedToCart', { name: title }))
+    setJustAdded(true)
+    setTimeout(() => setJustAdded(false), 1800)
+  }
+
+  const handleToggleWishlist = () => {
+    const willAdd = !wished
+    toggle(product.id)
+    notify(t(willAdd ? 'snackbar.addedToWishlist' : 'snackbar.removedFromWishlist', { name: title }))
+  }
 
   return (
     <Card
@@ -35,23 +56,23 @@ export function ProductCard({ product }: { product: Product }) {
           <Box
             component="img"
             src={product.images[0]}
-            alt={product.title}
+            alt={title}
             loading="lazy"
             sx={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }}
           />
         </CardActionArea>
-        <Stack direction="row" spacing={0.5} sx={{ position: 'absolute', top: 10, left: 10 }}>
+        <Stack direction="row" spacing={0.5} sx={{ position: 'absolute', top: 10, insetInlineStart: 10 }}>
           {product.tags.includes('new') && <Chip label="New" size="small" color="secondary" />}
           {discount > 0 && <Chip label={`-${discount}%`} size="small" color="error" />}
         </Stack>
         <IconButton
           aria-label={wished ? 'Remove from wishlist' : 'Add to wishlist'}
-          onClick={() => toggle(product.id)}
+          onClick={handleToggleWishlist}
           size="small"
           sx={{
             position: 'absolute',
             top: 8,
-            right: 8,
+            insetInlineEnd: 8,
             bgcolor: 'background.paper',
             '&:hover': { bgcolor: 'background.paper' },
           }}
@@ -59,23 +80,25 @@ export function ProductCard({ product }: { product: Product }) {
           {wished ? <FavoriteIcon fontSize="small" color="error" /> : <FavoriteBorderIcon fontSize="small" />}
         </IconButton>
         <IconButton
-          aria-label="Add to cart"
-          onClick={() => addItem(product.id)}
+          aria-label={t('product.addToCart')}
+          onClick={handleAddToCart}
           size="small"
+          disabled={justAdded}
           sx={{
             position: 'absolute',
             bottom: 8,
-            right: 8,
-            bgcolor: 'primary.main',
+            insetInlineEnd: 8,
+            bgcolor: justAdded ? 'success.main' : 'primary.main',
             color: 'primary.contrastText',
-            opacity: { xs: 1, sm: 0 },
-            transform: { xs: 'none', sm: 'translateY(6px)' },
-            transition: 'opacity 0.2s ease, transform 0.2s ease',
+            opacity: { xs: 1, sm: justAdded ? 1 : 0 },
+            transform: { xs: 'none', sm: justAdded ? 'translateY(0)' : 'translateY(6px)' },
+            transition: 'opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease',
             '.MuiCard-root:hover &': { opacity: 1, transform: 'translateY(0)' },
-            '&:hover': { bgcolor: 'primary.dark' },
+            '&:hover': { bgcolor: justAdded ? 'success.main' : 'primary.dark' },
+            '&.Mui-disabled': { bgcolor: 'success.main', color: 'primary.contrastText' },
           }}
         >
-          <ShoppingBagOutlinedIcon fontSize="small" />
+          {justAdded ? <CheckIcon fontSize="small" /> : <ShoppingBagOutlinedIcon fontSize="small" />}
         </IconButton>
       </Box>
       <CardContent component={RouterLink} to={`/products/${product.slug}`} sx={{ textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
@@ -95,7 +118,7 @@ export function ProductCard({ product }: { product: Product }) {
             minHeight: '2.6em',
           }}
         >
-          {product.title}
+          {title}
         </Typography>
         <Box sx={{ mt: 0.5, mb: 1 }}>
           <RatingStars value={product.rating} count={product.reviewsCount} />

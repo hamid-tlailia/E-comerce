@@ -6,8 +6,6 @@ import {
   Chip,
   Container,
   Drawer,
-  FormControlLabel,
-  FormGroup,
   IconButton,
   Link,
   MenuItem,
@@ -23,6 +21,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { Link as RouterLink, useSearchParams } from 'react-router-dom'
 import { categories, products } from '../data/products'
 import { ProductGrid } from '../components/product/ProductGrid'
+import { useLanguage } from '../context/LanguageContext'
 
 const MAX_PRICE = 200
 
@@ -33,6 +32,7 @@ export function ProductsPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const [searchParams, setSearchParams] = useSearchParams()
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const { lang, t } = useLanguage()
 
   const activeCategory = searchParams.get('category') ?? ''
   const activeFilter = searchParams.get('filter') ?? ''
@@ -75,20 +75,36 @@ export function ProductsPage() {
   const filtersContent = (
     <Box sx={{ width: { xs: 280, md: 240 } }}>
       <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-        Category
+        {t('products.category')}
       </Typography>
-      <FormGroup sx={{ mb: 3 }}>
-        {categories.map((cat) => (
-          <FormControlLabel
-            key={cat.id}
-            control={<Checkbox size="small" checked={activeCategory === cat.id} onChange={() => toggleCategory(cat.id)} />}
-            label={<Typography variant="body2">{cat.name}</Typography>}
-          />
-        ))}
-      </FormGroup>
+      <Stack spacing={0.5} sx={{ mb: 3 }}>
+        {categories.map((cat) => {
+          const selected = activeCategory === cat.id
+          return (
+            <Box
+              key={cat.id}
+              onClick={() => toggleCategory(cat.id)}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                borderRadius: 2,
+                px: 1,
+                cursor: 'pointer',
+                bgcolor: selected ? 'action.selected' : 'transparent',
+                '&:hover': { bgcolor: selected ? 'action.selected' : 'action.hover' },
+              }}
+            >
+              <Checkbox size="small" checked={selected} onChange={() => toggleCategory(cat.id)} onClick={(e) => e.stopPropagation()} />
+              <Typography variant="body2" fontWeight={selected ? 700 : 400}>
+                {lang === 'ar' ? cat.nameAr : cat.name}
+              </Typography>
+            </Box>
+          )
+        })}
+      </Stack>
 
       <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-        Price Range
+        {t('products.priceRange')}
       </Typography>
       <Box sx={{ px: 1, mb: 3 }}>
         <Slider
@@ -106,13 +122,13 @@ export function ProductsPage() {
       </Box>
 
       <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-        Minimum Rating
+        {t('products.minRating')}
       </Typography>
       <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 1 }}>
         {[0, 3, 4, 4.5].map((r) => (
           <Chip
             key={r}
-            label={r === 0 ? 'Any' : `${r}+`}
+            label={r === 0 ? t('products.any') : `${r}+`}
             size="small"
             color={minRating === r ? 'primary' : 'default'}
             onClick={() => setMinRating(r)}
@@ -125,16 +141,16 @@ export function ProductsPage() {
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 3, md: 5 } }}>
       <Breadcrumbs sx={{ mb: 2 }}>
-        <Link component={RouterLink} to="/" underline="hover" color="text.secondary">Home</Link>
-        <Typography color="text.primary">Shop</Typography>
+        <Link component={RouterLink} to="/" underline="hover" color="text.secondary">{t('products.home')}</Link>
+        <Typography color="text.primary">{t('products.shop')}</Typography>
       </Breadcrumbs>
 
       <Stack direction="row" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 3 }}>
         <Box>
           <Typography variant="h4" sx={{ fontSize: { xs: '1.5rem', md: '2rem' } }}>
-            {query ? `Results for "${query}"` : 'All Products'}
+            {query ? t('products.resultsFor', { q: query }) : t('products.allProducts')}
           </Typography>
-          <Typography variant="body2" color="text.secondary">{filtered.length} products</Typography>
+          <Typography variant="body2" color="text.secondary">{t('products.productsCount', { count: filtered.length })}</Typography>
         </Box>
       </Stack>
 
@@ -153,15 +169,15 @@ export function ProductsPage() {
             <TextField
               select
               size="small"
-              label="Sort by"
+              label={t('products.sortBy')}
               value={sort}
               onChange={(e) => setSort(e.target.value as SortKey)}
               sx={{ minWidth: 180 }}
             >
-              <MenuItem value="relevance">Relevance</MenuItem>
-              <MenuItem value="price-asc">Price: Low to High</MenuItem>
-              <MenuItem value="price-desc">Price: High to Low</MenuItem>
-              <MenuItem value="rating">Top Rated</MenuItem>
+              <MenuItem value="relevance">{t('products.relevance')}</MenuItem>
+              <MenuItem value="price-asc">{t('products.priceLowHigh')}</MenuItem>
+              <MenuItem value="price-desc">{t('products.priceHighLow')}</MenuItem>
+              <MenuItem value="rating">{t('products.topRated')}</MenuItem>
             </TextField>
           </Stack>
 
@@ -169,16 +185,16 @@ export function ProductsPage() {
             <ProductGrid products={filtered} />
           ) : (
             <Box sx={{ py: 10, textAlign: 'center' }}>
-              <Typography variant="h6" gutterBottom>No products found</Typography>
-              <Typography variant="body2" color="text.secondary">Try adjusting your filters or search terms.</Typography>
+              <Typography variant="h6" gutterBottom>{t('products.noProductsFound')}</Typography>
+              <Typography variant="body2" color="text.secondary">{t('products.tryAdjusting')}</Typography>
             </Box>
           )}
         </Box>
       </Stack>
 
-      <Drawer anchor="left" open={mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
+      <Drawer anchor={lang === 'ar' ? 'right' : 'left'} open={mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 2 }}>
-          <Typography variant="h6" fontWeight={800}>Filters</Typography>
+          <Typography variant="h6" fontWeight={800}>{t('products.filters')}</Typography>
           <IconButton onClick={() => setMobileFiltersOpen(false)}><CloseIcon /></IconButton>
         </Stack>
         <Box sx={{ px: 2, pb: 2 }}>{filtersContent}</Box>

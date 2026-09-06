@@ -1,8 +1,10 @@
 import { Box, Button, Container, Paper, Stack, Typography } from '@mui/material'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import { Link as RouterLink } from 'react-router-dom'
+import { useLanguage } from '../context/LanguageContext'
 
 export function OrderSuccessPage() {
+  const { t } = useLanguage()
   const orderNumber = `AS-${Math.floor(100000 + Math.random() * 900000)}`
 
   return (
@@ -10,10 +12,10 @@ export function OrderSuccessPage() {
       <Paper variant="outlined" sx={{ p: { xs: 4, md: 6 }, textAlign: 'center' }}>
         <CheckCircleOutlineIcon sx={{ fontSize: 72, color: 'success.main', mb: 2 }} />
         <Typography variant="h4" sx={{ mb: 1, fontSize: { xs: '1.5rem', md: '2rem' } }}>
-          Thank you for your order!
+          {t('orderSuccess.thankYou')}
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-          Your order <strong>#{orderNumber}</strong> has been placed. A confirmation email will be sent to you shortly.
+          {t('orderSuccess.orderPlaced', { order: orderNumber })}
         </Typography>
         <Box
           sx={{
@@ -21,20 +23,19 @@ export function OrderSuccessPage() {
             borderRadius: 2,
             p: 2,
             mb: 4,
-            textAlign: 'left',
+            textAlign: 'start',
           }}
         >
           <Typography variant="caption" color="text.secondary">
-            This is a design preview: no payment was actually processed and no order was saved, since the store
-            isn't connected to a backend or database yet.
+            {t('orderSuccess.previewNote')}
           </Typography>
         </Box>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
           <Button component={RouterLink} to="/products" variant="contained" size="large">
-            Continue Shopping
+            {t('orderSuccess.continueShopping')}
           </Button>
           <Button component={RouterLink} to="/" size="large">
-            Back to Home
+            {t('orderSuccess.backHome')}
           </Button>
         </Stack>
       </Paper>
