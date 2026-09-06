@@ -19,8 +19,8 @@ export function ContactPage() {
   }
 
   const infoRows = [
-    { icon: <EmailOutlinedIcon />, label: t('contact.emailLabel'), value: 'support@hamidosshop.com' },
-    { icon: <PhoneOutlinedIcon />, label: t('contact.phoneLabel'), value: '+1 (555) 010-2024' },
+    { icon: <EmailOutlinedIcon />, label: t('contact.emailLabel'), value: 'tlhamid18@gmail.com' },
+    { icon: <PhoneOutlinedIcon />, label: t('contact.phoneLabel'), value: '+974 7100 9494' },
     { icon: <PlaceOutlinedIcon />, label: t('contact.addressLabel'), value: t('contact.addressValue') },
     { icon: <AccessTimeOutlinedIcon />, label: t('contact.hoursLabel'), value: t('contact.hoursValue') },
   ]

@@ -239,7 +239,7 @@ export const translations = {
       addressLabel: 'Address',
       hoursLabel: 'Support Hours',
       hoursValue: '24/7 — every day of the week',
-      addressValue: '123 Market Street, Suite 400, San Francisco, CA 94103',
+      addressValue: 'Doha, Qatar',
     },
     shippingInfo: {
       title: 'Shipping Information',
@@ -516,7 +516,7 @@ export const translations = {
       addressLabel: 'العنوان',
       hoursLabel: 'ساعات الدعم',
       hoursValue: 'على مدار الساعة، طوال أيام الأسبوع',
-      addressValue: '١٢٣ شارع ماركت، جناح ٤٠٠، سان فرانسيسكو، كاليفورنيا ٩٤١٠٣',
+      addressValue: 'الدوحة، قطر',
     },
     shippingInfo: {
       title: 'معلومات الشحن',

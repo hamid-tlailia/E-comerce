@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { ScrollToTop } from './components/common/ScrollToTop'
+import { PreventZoom } from './components/common/PreventZoom'
 import { HomePage } from './pages/HomePage'
 import { ProductsPage } from './pages/ProductsPage'
 import { ProductDetailPage } from './pages/ProductDetailPage'
@@ -20,6 +21,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <PreventZoom />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />

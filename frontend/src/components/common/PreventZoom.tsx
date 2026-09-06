@@ -1,0 +1,27 @@
+import { useEffect } from 'react'
+
+export function PreventZoom() {
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) e.preventDefault()
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault()
+    }
+    const handleGesture = (e: Event) => e.preventDefault()
+
+    document.addEventListener('wheel', handleWheel, { passive: false })
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('gesturestart', handleGesture)
+    document.addEventListener('gesturechange', handleGesture)
+
+    return () => {
+      document.removeEventListener('wheel', handleWheel)
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('gesturestart', handleGesture)
+      document.removeEventListener('gesturechange', handleGesture)
+    }
+  }, [])
+
+  return null
+}
