@@ -18,9 +18,9 @@ export function ContactPage() {
     setForm({ name: '', email: '', subject: '', message: '' })
   }
 
-  const infoRows = [
-    { icon: <EmailOutlinedIcon />, label: t('contact.emailLabel'), value: 'tlhamid18@gmail.com' },
-    { icon: <PhoneOutlinedIcon />, label: t('contact.phoneLabel'), value: '+974 7100 9494' },
+  const infoRows: { icon: React.ReactNode; label: string; value: string; dir?: 'ltr' }[] = [
+    { icon: <EmailOutlinedIcon />, label: t('contact.emailLabel'), value: 'tlhamid18@gmail.com', dir: 'ltr' },
+    { icon: <PhoneOutlinedIcon />, label: t('contact.phoneLabel'), value: '+974 7100 9494', dir: 'ltr' },
     { icon: <PlaceOutlinedIcon />, label: t('contact.addressLabel'), value: t('contact.addressValue') },
     { icon: <AccessTimeOutlinedIcon />, label: t('contact.hoursLabel'), value: t('contact.hoursValue') },
   ]
@@ -90,7 +90,9 @@ export function ContactPage() {
                   <Box sx={{ color: 'primary.main', display: 'flex', mt: 0.25 }}>{row.icon}</Box>
                   <Box>
                     <Typography variant="body2" color="text.secondary">{row.label}</Typography>
-                    <Typography variant="body1" fontWeight={600}>{row.value}</Typography>
+                    <Typography variant="body1" fontWeight={600} dir={row.dir} sx={{ textAlign: row.dir === 'ltr' ? 'left' : undefined }}>
+                      {row.value}
+                    </Typography>
                   </Box>
                 </Stack>
               ))}
