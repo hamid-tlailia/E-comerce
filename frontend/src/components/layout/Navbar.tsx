@@ -83,9 +83,9 @@ export function Navbar() {
         sx={{ borderBottom: '1px solid', borderColor: 'divider', backdropFilter: 'blur(8px)' }}
       >
         <Container maxWidth="lg">
-          <Toolbar disableGutters sx={{ gap: { xs: 1, md: 3 }, py: 1 }}>
+          <Toolbar disableGutters sx={{ gap: { xs: 0.5, md: 3 }, py: 1 }}>
             {isMobile && (
-              <IconButton onClick={() => setDrawerOpen(true)} aria-label={t('nav.menu')}>
+              <IconButton onClick={() => setDrawerOpen(true)} aria-label={t('nav.menu')} sx={{ flexShrink: 0 }}>
                 <MenuIcon />
               </IconButton>
             )}
@@ -95,7 +95,12 @@ export function Navbar() {
               to="/"
               variant="h5"
               fontWeight={800}
-              sx={{ textDecoration: 'none', color: 'text.primary', flexShrink: 0 }}
+              sx={{
+                textDecoration: 'none',
+                color: 'text.primary',
+                flexShrink: 0,
+                fontSize: { xs: '1.15rem', sm: '1.5rem' },
+              }}
             >
               Hamidos<Box component="span" sx={{ color: 'primary.main' }}>Shop</Box>
             </Typography>
@@ -144,7 +149,7 @@ export function Navbar() {
               </Box>
             )}
 
-            <Stack direction="row" spacing={0.5} sx={{ ml: 'auto' }}>
+            <Stack direction="row" spacing={{ xs: 0, sm: 0.5 }} sx={{ ml: 'auto', flexShrink: 0 }}>
               <IconButton onClick={toggleMode} aria-label="Toggle color mode">
                 {mode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
               </IconButton>
