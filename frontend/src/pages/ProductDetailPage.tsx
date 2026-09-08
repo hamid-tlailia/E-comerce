@@ -196,7 +196,7 @@ export function ProductDetailPage() {
               </Button>
               <IconButton
                 onClick={handleToggleWishlist}
-                sx={{ border: '1px solid', borderColor: 'divider', flexShrink: 0 }}
+                sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '14px', flexShrink: 0 }}
                 aria-label="Toggle wishlist"
               >
                 {wished ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
