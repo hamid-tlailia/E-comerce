@@ -180,29 +180,31 @@ export function ProductDetailPage() {
             <Typography variant="caption" color="text.secondary">{t('product.inStock', { count: product.stock })}</Typography>
           </Stack>
 
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: 3 }}>
-            <Button
-              variant="contained"
-              size="large"
-              fullWidth
-              color={justAdded ? 'success' : 'primary'}
-              startIcon={justAdded ? <CheckIcon /> : undefined}
-              onClick={handleAddToCart}
-              disabled={justAdded}
-              sx={{ '&.Mui-disabled': { bgcolor: 'success.main', color: 'success.contrastText' } }}
-            >
-              {justAdded ? t('product.added') : t('product.addToCart')}
-            </Button>
+          <Stack spacing={2} sx={{ mb: 3 }}>
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                color={justAdded ? 'success' : 'primary'}
+                startIcon={justAdded ? <CheckIcon /> : undefined}
+                onClick={handleAddToCart}
+                disabled={justAdded}
+                sx={{ '&.Mui-disabled': { bgcolor: 'success.main', color: 'success.contrastText' } }}
+              >
+                {justAdded ? t('product.added') : t('product.addToCart')}
+              </Button>
+              <IconButton
+                onClick={handleToggleWishlist}
+                sx={{ border: '1px solid', borderColor: 'divider', flexShrink: 0 }}
+                aria-label="Toggle wishlist"
+              >
+                {wished ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
+              </IconButton>
+            </Stack>
             <Button variant="outlined" size="large" fullWidth onClick={handleBuyNow}>
               {t('product.buyNow')}
             </Button>
-            <IconButton
-              onClick={handleToggleWishlist}
-              sx={{ border: '1px solid', borderColor: 'divider', flexShrink: 0 }}
-              aria-label="Toggle wishlist"
-            >
-              {wished ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
-            </IconButton>
           </Stack>
 
           <Stack spacing={1.5}>
